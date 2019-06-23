@@ -2,6 +2,7 @@ const filmForm = document.getElementById('film-form');
 const addInput = document.getElementById('add-input');
 const filmList = document.getElementById('film-list');
 const filmItems = document.querySelectorAll('.film-item');
+
 let i = 0;
 
 function addFilm(event) {
@@ -17,46 +18,45 @@ function addFilm(event) {
 
 }
 
-function createElement(tag, props, ...children) {
+function createElement(tag, props, arguments, stars) {
     const element = document.createElement(tag);
 
-    Object.keys(props).forEach(key => element[key] = props[key]);
+    Object.keys(props).forEach(function (key) { element[key] = props[key] });
 
-    if (children.length > 0) {
-        children.forEach(child => {
-            if (typeof child === 'string') {
-                child = document.createTextNode(child);
-            }
+    if (arguments !== 0) {
+
+
+        if (typeof (arguments) == 'object') {
+            element.appendChild(arguments);
+        } else {
+            const child = document.createTextNode(arguments);
+            child.innerHTML = arguments;
 
             element.appendChild(child);
-        });
+        }
+
+        if (stars !== 0) {
+            element.appendChild(stars);
+        }
+
+
+
     }
+
 
     return element;
 }
 
 function createFilmItem(title, rating) {
-    const label = createElement('label', { className: '' }, title);
-    const stars = createElement('div', { className: 'star-list' });
+    const label = createElement('label', { className: '' }, title, 0);
+    const stars = createElement('div', { className: 'star-list' }, 0, 0);
 
-    stars.innerHTML = `<input class="star-input" type="radio" name="star${[i]}" id="star-1-${[i]}" value="5">
-             <label for="star-1-${[i]}"></label>
-    
-             <input class="star-input" type="radio" name="star${[i]}" id="star-2-${[i]}" value="4">
-             <label for="star-2-${[i]}"></label>
-    
-             <input class="star-input" type="radio" name="star${[i]}" id="star-3-${[i]}" value="3">
-             <label for="star-3-${[i]}"></label>
-    
-             <input class="star-input" type="radio" name="star${[i]}" id="star-4-${[i]}" value="2">
-             <label for="star-4-${[i]}"></label>
-    
-             <input class="star-input" type="radio" name="star${[i]}" id="star-5-${[i]}" value="1">
-             <label for="star-5-${[i]}"></label>`;
+    stars.innerHTML = '<input class="star-input" type="radio" name="star' + i + '" id="star-1-' + i + '" value="5">    <label for="star-1-' + i + '"></label>    <input class="star-input" type="radio" name="star' + i + '" id="star-2-' + i + '" value="4">   <label for="star-2-' + i + '"></label>    <input class="star-input" type="radio" name="star' + i + '" id="star-3-' + i + '" value="3">   <label for="star-3-' + i + '"></label>    <input class="star-input" type="radio" name="star' + i + '" id="star-4-' + i + '" value="2">    <label for="star-4-' + i + '"></label>    <input class="star-input" type="radio" name="star' + i + '" id="star-5-' + i + '" value="1">    <label for="star-5-' + i + '"></label>';
 
     i++;
 
     const filmItem = createElement('li', { className: 'film-item' }, label, stars);
+
     filmItem.rating = rating;
 
     bindEvents(filmItem);
@@ -82,6 +82,7 @@ function setStars(filmItem) {
 function bindEvents(filmItem) {
     const stars = filmItem.querySelector('.star-list');
 
+
     stars.addEventListener('click', updateRating);
 }
 
@@ -90,7 +91,7 @@ function updateRating() {
     const stars = filmItem.querySelectorAll('.star-input');
 
     for (let i = 0; i < stars.length; i++) {
-        stars.forEach(input => {
+        Array.prototype.slice.call(stars).forEach(function (input) {
             if (input.checked) {
                 filmItem.rating = input.value;
             }
@@ -159,7 +160,8 @@ function main() {
     }
 
     filmForm.addEventListener('submit', addFilm);
-    filmItems.forEach(item => bindEvents(item));
+
+    Array.prototype.slice.call(filmItems).forEach(function (item) { bindEvents(item) });
 }
 
 main();

@@ -4,14 +4,18 @@ body {
 }
 
 #app {
+    padding-bottom: 10px;
     max-width: 550px;
     margin: 70px auto;
     border-radius: 2px;
     overflow: hidden;
     border: 1px solid grey;
+    display: block;
 }
 
 header {
+    max-width: 550px;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     background-color: #6a90d6;
@@ -24,7 +28,14 @@ header h1 {
     margin: 1rem auto;
 }
 
+#film-list {
+    max-width: 550px;
+    margin: 0 auto;
+}
+
 #film-form {
+    max-width: 550px;
+    margin: 0 auto;
     display: flex;
     background-color: #FAFAFA;
     border-top: 1px solid rgba(0,0,0,.1);
