@@ -1,1 +1,1 @@
-# rating-system
+https://underdoglzd.github.io/rating-system/
